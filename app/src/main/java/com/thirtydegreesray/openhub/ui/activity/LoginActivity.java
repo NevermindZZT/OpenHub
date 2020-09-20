@@ -9,6 +9,8 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.thirtydegreesray.openhub.R;
@@ -43,6 +45,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     @BindView(R.id.user_name_layout) TextInputLayout userNameLayout;
     @BindView(R.id.password_et) TextInputEditText passwordEt;
     @BindView(R.id.password_layout) TextInputLayout passwordLayout;
+    @BindView(R.id.remember_password_cb) CheckBox rememberPasswordCb;
     @BindView(R.id.login_bn) SubmitButton loginBn;
 
     private String userName;
@@ -134,6 +137,21 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
             }
         });
 
+        rememberPasswordCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mPresenter.saveRememberPassword(LoginActivity.this, isChecked);
+            }
+        });
+
+        boolean isRememberPassword = mPresenter.getIsRememberPassword(this);
+        rememberPasswordCb.setChecked(isRememberPassword);
+        if (isRememberPassword) {
+            String[] account = mPresenter.getSavedAccount(this);
+            userNameEt.setText(account[0]);
+            passwordEt.setText(account[1]);
+        }
+
     }
 
 
@@ -146,6 +164,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     public void onLoginClick(){
         if(loginCheck()){
             loginBn.setEnabled(false);
+            if (rememberPasswordCb.isChecked()) {
+                mPresenter.saveAccount(this, userName, password);
+            }
             mPresenter.basicLogin(userName, password);
         }else{
             loginBn.reset();

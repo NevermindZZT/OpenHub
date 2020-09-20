@@ -2,7 +2,9 @@
 
 package com.thirtydegreesray.openhub.mvp.presenter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
@@ -149,6 +151,35 @@ public class LoginPresenter extends BasePresenter<ILoginContract.View>
         generalRxHttpExecute(observable, subscriber);
         mView.showProgressDialog(getLoadTip());
 
+    }
+
+    public String[] getSavedAccount(Context context) {
+        String[] account = new String[2];
+        SharedPreferences preferences = context.getSharedPreferences("account", Context.MODE_PRIVATE);
+        account[0] = preferences.getString("username", "");
+        account[1] = preferences.getString("password", "");
+        return account;
+    }
+
+    public void saveAccount(Context context, String username, String password) {
+        SharedPreferences.Editor editor = context.getSharedPreferences("account", Context.MODE_PRIVATE).edit();
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.apply();
+    }
+
+    public boolean getIsRememberPassword(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("account", Context.MODE_PRIVATE);
+        return preferences.getBoolean("isRemember", false);
+    }
+
+    public void saveRememberPassword(Context context, boolean isRemember) {
+        SharedPreferences.Editor editor = context.getSharedPreferences("account", Context.MODE_PRIVATE).edit();
+        editor.putBoolean("isRemember", isRemember);
+        if (!isRemember) {
+            editor.putString("password", "");
+        }
+        editor.apply();
     }
 
     private void saveAuthUser(BasicToken basicToken, User userInfo) {

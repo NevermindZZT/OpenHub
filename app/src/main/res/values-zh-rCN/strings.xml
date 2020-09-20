@@ -3,6 +3,7 @@
     <string name="user_name">用户名</string>
     <string name="password">密码</string>
     <string name="login">登录</string>
+    <string name="remember_password">记住密码</string>
     <string name="login_in_browser">在浏览器中登录</string>
     <string name="oauth_tip">使用您的默认浏览器登录(OAuth)</string>
     <string name="user_name_warning">用户名不可用！</string>

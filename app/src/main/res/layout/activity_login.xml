@@ -79,6 +79,14 @@
                         android:imeOptions="actionSend"/>
                 </android.support.design.widget.TextInputLayout>
 
+                <CheckBox
+                    android:id="@+id/remember_password_cb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_x_large"
+                    android:text="@string/remember_password"
+                    android:textColor="?colorAccent"/>
+
                 <com.unstoppable.submitbuttonview.SubmitButton
                     android:id="@+id/login_bn"
                     android:layout_width="160dp"

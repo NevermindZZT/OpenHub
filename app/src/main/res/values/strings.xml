@@ -25,6 +25,7 @@
     <!-- onLoginClick -->
     <string name="user_name">Username</string>
     <string name="password">Password</string>
+    <string name="remember_password">Remember Password</string>
     <string name="login">Login</string>
     <string name="login_in_browser">LOGIN WITH BROWSER</string>
     <string name="oauth_tip">Login using your default browser(OAuth)</string>
